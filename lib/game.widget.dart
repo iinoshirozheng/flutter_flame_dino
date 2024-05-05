@@ -14,7 +14,7 @@ class DinoGameWidget extends StatelessWidget {
         margin: const EdgeInsets.all(45.0),
         child: ClipRect(
           child: GameWidget(
-            game: DinoGameManager(),
+            game: GameManager(),
             loadingBuilder: (_) => const Center(child: Text('Loading')),
           ),
         ),

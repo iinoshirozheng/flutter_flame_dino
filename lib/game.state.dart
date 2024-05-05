@@ -32,6 +32,19 @@ class GameState {
 
   //  Variables to manage the game state and game logic.
   EGameState current = EGameState.none;
+
+  // getter
+  bool get isIntro => current == EGameState.intro;
+
+  bool get isLoading => current == EGameState.loading;
+
+  bool get isPlaying => current == EGameState.playing;
+
+  bool get isGameOver => current == EGameState.gameOver;
+
+  EGameState get nextState => current.getNextState;
+
+  // property
   double currentSpeed = 0.0;
   double playingTime = 0.0;
 
@@ -40,5 +53,5 @@ class GameState {
   double maxSpeed = 2500.0;
   double startSpeed = 600;
 
-  void toNextState() => current = current.getNextState;
+  EGameState toNext() => current = current.getNextState;
 }
