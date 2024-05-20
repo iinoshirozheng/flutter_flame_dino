@@ -27,10 +27,7 @@ class Player extends Component with HasGameRef<GameManager> {
 
   void playAnimation() => _animation.play(state);
 
-  void resetGroundYPos() {
-    _movement.groundYPos = (gameRef.size.y / 2) - _animation.height / 2;
-    syncAnimationPosition();
-  }
+  Vector2 get spriteSize => _animation.size;
 
   void bindJumpAction() {
     bool activateJump = gameRef.gameState.isPlaying && gameRef.onActionJump;
@@ -46,7 +43,7 @@ class Player extends Component with HasGameRef<GameManager> {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    resetGroundYPos();
+    syncAnimationPosition();
     add(_animation);
     add(_movement);
   }
@@ -59,11 +56,5 @@ class Player extends Component with HasGameRef<GameManager> {
     playAnimation();
     // jump action
     bindJumpAction();
-  }
-
-  @override
-  void onGameResize(Vector2 size) {
-    super.onGameResize(size);
-    resetGroundYPos();
   }
 }

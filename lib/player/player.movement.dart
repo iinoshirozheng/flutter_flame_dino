@@ -16,16 +16,29 @@ class PlayerMovement extends Component {
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    resetGroundYPos();
     _onFloor();
+  }
+
+  EPlayerState get playerState {
+    final player = parent;
+    if (player is Player) {
+      return player.state;
+    }
+    return EPlayerState.crashed;
+  }
+
+  set playerState(EPlayerState state) {
+    final player = parent;
+    if (player is Player) {
+      player.state = state;
+    }
   }
 
   void initVelocity() => _jumpVelocity = initialJumpVelocity;
 
   void reset() {
-    final player = parent;
-    if (player is Player) {
-      player.state = EPlayerState.running;
-    }
+    playerState = EPlayerState.running;
     position.y = groundYPos;
     _jumpVelocity = 0.0;
   }
@@ -50,21 +63,32 @@ class PlayerMovement extends Component {
   @override
   void update(double dt) {
     super.update(dt);
+    switch (playerState) {
+      case EPlayerState.waiting:
+        {
+          checkXPos(dt);
+          return _onFloor();
+        }
+      case EPlayerState.running:
+        return _onFloor();
+      case EPlayerState.jumping:
+        return _onAir();
+      case EPlayerState.crashed:
+        return;
+    }
+  }
+
+  void resetGroundYPos() {
     final player = parent;
     if (player is Player) {
-      switch (player.state) {
-        case EPlayerState.waiting:
-          {
-            checkXPos(dt);
-            return _onFloor();
-          }
-        case EPlayerState.running:
-          return _onFloor();
-        case EPlayerState.jumping:
-          return _onAir();
-        case EPlayerState.crashed:
-          return;
-      }
+      groundYPos = (player.gameRef.size.y / 2) - player.spriteSize.y / 2;
     }
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    // TODO: implement onGameResize
+    super.onGameResize(size);
+    resetGroundYPos();
   }
 }
