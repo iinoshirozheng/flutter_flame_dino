@@ -1,10 +1,7 @@
 import 'package:flame/components.dart';
-
-enum EPlayerState { waiting, running, jumping, crashed }
+import 'package:flame_dino_game/player/player.dart';
 
 class PlayerMovement extends Component {
-  EPlayerState playerState = EPlayerState.waiting;
-
   // Constants defining the player's physics and position.
   final double gravity = 1;
   final double initialJumpVelocity = -15.0;
@@ -22,21 +19,13 @@ class PlayerMovement extends Component {
     _onFloor();
   }
 
-  void jump() {
-    if (playerState != EPlayerState.jumping) {
-      playerState = EPlayerState.jumping;
-      _jumpVelocity = initialJumpVelocity;
-    }
-  }
-
-  void run() => playerState = EPlayerState.running;
-
-  void idle() => playerState = EPlayerState.waiting;
-
-  void crashed() => playerState = EPlayerState.crashed;
+  void initVelocity() => _jumpVelocity = initialJumpVelocity;
 
   void reset() {
-    playerState = EPlayerState.running;
+    final player = parent;
+    if (player is Player) {
+      player.state = EPlayerState.running;
+    }
     position.y = groundYPos;
     _jumpVelocity = 0.0;
   }
@@ -61,18 +50,21 @@ class PlayerMovement extends Component {
   @override
   void update(double dt) {
     super.update(dt);
-    switch (playerState) {
-      case EPlayerState.waiting:
-        {
-          checkXPos(dt);
+    final player = parent;
+    if (player is Player) {
+      switch (player.state) {
+        case EPlayerState.waiting:
+          {
+            checkXPos(dt);
+            return _onFloor();
+          }
+        case EPlayerState.running:
           return _onFloor();
-        }
-      case EPlayerState.running:
-        return _onFloor();
-      case EPlayerState.jumping:
-        return _onAir();
-      case EPlayerState.crashed:
-        return;
+        case EPlayerState.jumping:
+          return _onAir();
+        case EPlayerState.crashed:
+          return;
+      }
     }
   }
 }

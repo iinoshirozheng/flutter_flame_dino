@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame_dino_game/game.manager.dart';
+import 'package:flame_dino_game/player/player.dart';
 import 'package:flame_dino_game/utils/sprite.info.dart';
-import 'package:flame_dino_game/player/player.movement.dart';
 
 class PlayerAnimation extends SpriteAnimationGroupComponent<EPlayerState>
     with HasGameRef<GameManager> {
@@ -16,7 +16,10 @@ class PlayerAnimation extends SpriteAnimationGroupComponent<EPlayerState>
       EPlayerState.jumping: _getAnimation(dinoJumpingSprite),
       EPlayerState.crashed: _getAnimation(dinoCrashedSprite),
     };
-    super.current = EPlayerState.waiting;
+    final player = parent;
+    if (player is Player) {
+      super.current = player.state;
+    }
   }
 
   SpriteAnimation _getAnimation(SpriteInfo info) {

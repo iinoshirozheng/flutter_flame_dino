@@ -17,7 +17,6 @@ class GameFlow extends Component with HasGameRef<GameManager> {
   @override
   void update(double dt) {
     super.update(dt);
-    print(gameRef.gameState.current);
     switch (gameRef.gameState.current) {
       case EGameState.none:
         break;
