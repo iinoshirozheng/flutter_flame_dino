@@ -1,7 +1,6 @@
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flame/components.dart';
 import 'package:flame_dino_game/game.flow.dart';
 
 import 'dart:ui';
@@ -9,8 +8,7 @@ import 'package:flame_dino_game/game.state.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/services.dart';
 
-class GameManager extends FlameGame
-    with HasGameRef, KeyboardEvents, TapDetector {
+class GameManager extends FlameGame with KeyboardEvents, TapDetector {
   // Image
   late final Image spriteImage;
 
