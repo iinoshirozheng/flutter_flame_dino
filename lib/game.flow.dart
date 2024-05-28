@@ -9,7 +9,6 @@ class GameFlow extends Component with HasGameRef<GameManager> {
 
   @override
   Future<void> onLoad() async {
-    // TODO: implement onLoad
     super.onLoad();
     add(player);
   }

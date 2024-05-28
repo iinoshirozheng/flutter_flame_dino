@@ -75,6 +75,8 @@ class PlayerMovement extends Component {
         return _onAir();
       case EPlayerState.crashed:
         return;
+      case EPlayerState.ducking:
+        return _onFloor();
     }
   }
 
@@ -87,7 +89,6 @@ class PlayerMovement extends Component {
 
   @override
   void onGameResize(Vector2 size) {
-    // TODO: implement onGameResize
     super.onGameResize(size);
     resetGroundYPos();
   }

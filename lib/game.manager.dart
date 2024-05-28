@@ -5,6 +5,7 @@ import 'package:flame_dino_game/game.flow.dart';
 
 import 'dart:ui';
 import 'package:flame_dino_game/game.state.dart';
+import 'package:flame_dino_game/player/player.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/services.dart';
 
@@ -41,6 +42,12 @@ class GameManager extends FlameGame with KeyboardEvents, TapDetector {
         keysPressed.contains(LogicalKeyboardKey.space)) {
       gameFlow.runStateAction(EGameState.playing);
       onActionJump = true;
+    }
+
+    if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
+      gameFlow.player.ducking();
+    } else if (gameFlow.player.state != EPlayerState.jumping) {
+      gameFlow.player.run();
     }
     return super.onKeyEvent(event, keysPressed);
   }

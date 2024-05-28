@@ -5,7 +5,7 @@ import 'package:flame_dino_game/utils/sprite.info.dart';
 
 class PlayerAnimation extends SpriteAnimationGroupComponent<EPlayerState>
     with HasGameRef<GameManager> {
-  PlayerAnimation() : super(size: SpriteInfo.dinoWaiting.size);
+  PlayerAnimation();
 
   @override
   Future<void> onLoad() async {
@@ -14,6 +14,7 @@ class PlayerAnimation extends SpriteAnimationGroupComponent<EPlayerState>
       EPlayerState.waiting: _getAnimation(SpriteInfo.dinoWaiting),
       EPlayerState.running: _getAnimation(SpriteInfo.dinoRunning),
       EPlayerState.jumping: _getAnimation(SpriteInfo.dinoJumping),
+      EPlayerState.ducking: _getAnimation(SpriteInfo.dinoDucking),
       EPlayerState.crashed: _getAnimation(SpriteInfo.dinoCrashed),
     };
     final player = parent;

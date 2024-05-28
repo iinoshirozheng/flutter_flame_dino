@@ -14,6 +14,8 @@ class SpriteInfo {
       SpriteInfo._internal(Vector2(88.0, 90.0), [Vector2(76.0, 6.0)]);
   static final dinoJumping =
       SpriteInfo._internal(Vector2(88.0, 90.0), [Vector2(1339.0, 6.0)]);
+  static final dinoDucking = SpriteInfo._internal(
+      Vector2(118.0, 90.0), [Vector2(1867, 4.0), Vector2(1984, 4.0)], 0.2);
   static final dinoCrashed =
       SpriteInfo._internal(Vector2(88.0, 90.0), [Vector2(1782.0, 6.0)]);
 }

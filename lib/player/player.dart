@@ -3,7 +3,7 @@ import 'package:flame_dino_game/game.manager.dart';
 import 'package:flame_dino_game/player/player.animation.dart';
 import 'package:flame_dino_game/player/player.movement.dart';
 
-enum EPlayerState { waiting, running, jumping, crashed }
+enum EPlayerState { waiting, running, jumping, ducking, crashed }
 
 class Player extends Component with HasGameRef<GameManager> {
   EPlayerState state = EPlayerState.waiting;
@@ -17,11 +17,15 @@ class Player extends Component with HasGameRef<GameManager> {
     }
   }
 
-  void run() => state = EPlayerState.running;
+  void run() => state =
+      gameRef.gameState.isIntro ? EPlayerState.waiting : EPlayerState.running;
 
   void idle() => state = EPlayerState.waiting;
 
   void crashed() => state = EPlayerState.crashed;
+
+  void ducking() => state =
+      gameRef.gameState.isIntro ? EPlayerState.waiting : EPlayerState.ducking;
 
   void reset() => _movement.reset();
 
